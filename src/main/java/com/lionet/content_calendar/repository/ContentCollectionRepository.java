@@ -3,7 +3,6 @@ package com.lionet.content_calendar.repository;
 import com.lionet.content_calendar.model.ContType;
 import com.lionet.content_calendar.model.Content;
 import com.lionet.content_calendar.model.Status;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -13,21 +12,24 @@ import java.util.Optional;
 
 @Repository
 public class ContentCollectionRepository {
-    private final List<Content> content = new ArrayList<>();
+    private final List<Content> contentList = new ArrayList<>();
 
     public ContentCollectionRepository(){
 
     }
 
     public List<Content> findAll(){
-        return content;
+        return contentList;
     }
 
     public Optional<Content> findById(Integer id){
-        return content.stream().filter(c -> c.id().equals(id)).findFirst();
+        return contentList.stream().filter(c -> c.id().equals(id)).findFirst();
     }
 
-    @PostConstruct
+    public void save(Content content){
+        contentList.add(content);
+    }
+
     public void init(){
         Content cont = new Content(
                 1,
@@ -40,6 +42,7 @@ public class ContentCollectionRepository {
                 null
         );
 
-        content.add(cont);
+        contentList.add(cont);
     }
+
 }

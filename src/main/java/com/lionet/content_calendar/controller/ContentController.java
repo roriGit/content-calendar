@@ -2,10 +2,9 @@ package com.lionet.content_calendar.controller;
 
 import com.lionet.content_calendar.model.Content;
 import com.lionet.content_calendar.repository.ContentCollectionRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,13 @@ public class ContentController {
         return repository.findById(id);
     }
 
-    public Optional<Content> findSingle(Integer id){
-        return repository.findById(id);
+    public Content findSingle(Integer id){
+        return repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No content in calendar"));
+    }
+
+    @PostMapping("/create")
+    public void createContent(@RequestBody Content content){
+        repository.save(content);
     }
 }
