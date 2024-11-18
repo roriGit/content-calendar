@@ -11,4 +11,8 @@ public record Content(
         ContType type, //enum
         LocalDateTime dateCreated,
         LocalDateTime dateUpdated) {
+
+    Integer getId(){
+        return id;
+    }
 }

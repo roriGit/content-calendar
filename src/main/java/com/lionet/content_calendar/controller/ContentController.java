@@ -30,13 +30,23 @@ public class ContentController {
         return repository.findById(id);
     }
 
-    public Content findSingle(Integer id){
+    public Content findSingle(@PathVariable Integer id){
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No content in calendar"));
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     public void createContent(@RequestBody Content content){
         repository.save(content);
     }
+
+
+    @PutMapping("/update/{id}")
+    public void updateContent(@RequestBody Content content, @PathVariable Integer id) {
+        if (!repository.findContentById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
+        }
+    }
+
 }

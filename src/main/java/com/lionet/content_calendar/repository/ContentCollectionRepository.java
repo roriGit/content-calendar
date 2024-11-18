@@ -30,6 +30,10 @@ public class ContentCollectionRepository {
         contentList.add(content);
     }
 
+    public boolean findContentById(Integer id){
+        return contentList.stream().filter(c -> c.id().equals(id)).count()==1;
+    }
+
     public void init(){
         Content cont = new Content(
                 1,
