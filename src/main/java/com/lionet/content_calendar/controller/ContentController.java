@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/content")
@@ -26,11 +25,7 @@ public class ContentController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Content> findById(@PathVariable Integer id){
-        return repository.findById(id);
-    }
-
-    public Content findSingle(@PathVariable Integer id){
+    public Content findById(@PathVariable Integer id){
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No content in calendar"));
     }
