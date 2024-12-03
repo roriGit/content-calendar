@@ -42,6 +42,12 @@ public class ContentController {
         if (!repository.findContentById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found");
         }
+        repository.save(content);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Integer id){
+        repository.delete(id);
     }
 
 }
